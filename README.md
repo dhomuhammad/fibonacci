@@ -125,148 +125,72 @@ Berikut adalah coding pada menu layout :
 -Java class
 Pada Java class MainActivity.java berisi semua coding untuk menjalankan aplikasi. Seperti fungsi untuk tombol-tombol, dialog count, dan dialog back.
 
-*{
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-}
-.main {
-    width: 100%;
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url(HOTEL.avif);
-    background-size: cover;
-    background-position: center;
-}
-.navbar {
-    width: 85%;
-    margin: auto;
-    padding: 35px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.logo {
-    font-size: 36px;
-    color: white;
-    font-weight: bold;
-    width: 120px;
-    cursor: pointer;
-}
-.navbar ul li {
-    list-style: none;
-    display: inline-block;
-    margin:  0 20px;
-    position: relative;
-}
-.navbar ul li a{
-    color: white;
-    text-transform: uppercase;
-}
-.navbar ul li::after {
-    content: '';
-    height: 3px;
-    width: 100%;
-    background: green;
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    transition: 0,5s;
-}
-.navbar ul li:hover::after {
-    width: 100%;
-}
-.content {
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    color: white;
-    position: absolute;
-    transform: translateY(-50%);
-}
-.content h1 {
-    font-size: 80px;
-    margin-top: 80px;
-}
-.content p {
-    margin: 20px auto;
-    font-weight: 100;
-    line-height: 25px;
-}
-@keyframes blinkcolor {
-    30%{
-        color: #df4a48;
-    }
-    70%{
-        color: #284454;
-    }
-    100%{
-        color: #389c15;
-    }
-}
 
-@keyframes moveleft {
-    0%{
-        transform: translate(0px);
-    }
-    50%{
-        transform: translate(20px);
-    }
-    100%{
-        transform: translate(0px);
-    }
-}
-@keyframes moveright {
-    0%{
-        transform: translate(0px);
-    }
-    50%{
-        transform: translate(-20px);
-    }
-    100%{
-        transform: translate(0px);
-    }
-}
+package com.example.fibonacci;
 
-.blinkteks .we-install {
-    text-align: center;
-    font-size: 25px;
-}
-.blinkteks .we-install a {
-    color: #df4a48;
-    border-bottom: 1px solid;
-    padding: 5px;
-	  text-decoration: none;
-    position: relative;
-    animation-name: blinkcolor;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-}
-.blinkteks .we-install a:hover {
-    animation-play-state: paused;
-}
-.blinkteks .we-install a:before {
-    content: "\f178";
-    font-family: fontawesome;
-    position: absolute;
-    left: -15%;
-    animation-name: moveleft;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-}
-.blinkteks .we-install a:after {
-    content: "\f177";
-    font-family: fontawesome;
-    position: absolute;
-    right: -15%;
-    animation-name: moveright;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-}
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    private int count = 1;
+    private TextView showCount;
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        showCount = findViewById(R.id.show_count);
+    }
+
+    public void showToast(View view) {
+        Toast toast = Toast.makeText(this, "Welcome Toast!", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void CountUP(View view) {
+        if (count < 0) {
+            count = 0;
+        }
+
+        int result = generateFibonacci(count);
+
+        if (result <= 1000) {
+            showCount.setText(Integer.toString(result));
+            count++;
+        }
+    }
+
+
+    private int generateFibonacci(int n) {
+        if (n <= 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        }
+
+        int first = 0;
+        int second = 1;
+        for (int i = 2; i <= n;  i++) {
+            int next = first + second;
+            first = second;
+            second = next;
+        }
+        return first;
+
+    }
+    public void Reset(View view) {
+        count = 1;
+        showCount.setText("1");
+    }
+}
 
 -Tampilan Design
 
